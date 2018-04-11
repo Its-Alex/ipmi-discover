@@ -14,6 +14,8 @@ $ make build
 
 Build this image then launch it on server that receive request
 
+You can find an exemple with docker-compose [here](/docker)
+
 # Hack
 
 To enter inside image use:
