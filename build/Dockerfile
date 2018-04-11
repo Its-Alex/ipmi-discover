@@ -3,9 +3,7 @@ FROM ubuntu:18.04 AS build
 ENV LANG C.UTF-8
 ENV KEA_VERSION 1.3.0
 
-RUN apt-get update && apt-get -y --no-install-recommends --no-upgrade install \
-# FreeIPMI tools
-    freeipmi-tools \
+RUN apt update && apt -y --no-install-recommends --no-upgrade install \
 # Build deps
     make \
     automake \
@@ -42,6 +40,7 @@ RUN apt-get update && apt-get -y --no-install-recommends --no-upgrade install \
     && make -j "$(getconf _NPROCESSORS_ONLN)" \
     && make install \
 ## cleanup
+    && rm -rf /usr/src \
     && apt purge -y \
         make \
         automake \
@@ -58,7 +57,9 @@ RUN apt-get update && apt-get -y --no-install-recommends --no-upgrade install \
         e2fslibs \
         postgresql-server-dev-all \
     && apt remove --purge -y $(apt-mark showauto) \
-    && apt autoremove -y
+    && apt autoremove -y \
+# Free IPMI
+    && apt install -y --no-install-recommends --no-upgrade freeipmi-tools
 
 EXPOSE 67/udp
 
