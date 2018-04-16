@@ -52,15 +52,17 @@ RUN apt update && apt -y --no-install-recommends --no-upgrade install \
         autoconf \
         libssl-dev \
         liblog4cplus-dev \
-        libboost-system-dev \
-        libpq-dev \
         e2fslibs \
         postgresql-server-dev-all \
     && apt remove --purge -y $(apt-mark showauto) \
     && apt autoremove -y \
 # Free IPMI
-    && apt install -y --no-install-recommends --no-upgrade freeipmi-tools
+    && apt install -y --no-install-recommends --no-upgrade \
+        freeipmi-tools \
+        liblog4cplus-dev \
+        libboost-system-dev \
+        libpq-dev
 
 EXPOSE 67/udp
 
-CMD ["/usr/local/sbin/kea-dhcp4", "--help"]
+CMD ["/usr/sbin/kea-dhcp4", "--help"]
