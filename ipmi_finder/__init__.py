@@ -51,26 +51,38 @@ def is_ipmiping(ip):
             exit(1)
         return False
 
+def start_kea(cmd, time):
+    p = subprocess.Popen(
+        cmd,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+    out, err = p.communicate(timeout=time)
+    if p.returncode != 0:
+        print("Kea failed to start: " + err.decode('utf-8'), end='')
+        exit(1)
+    else:
+        return out
+
 def cli():
     root_parser = argparse.ArgumentParser()
     root_parser.add_argument('-t', '--time', type=int,
         help="Time to wait for ip alloc", default=60)
-    root_parser.add_argument('--log-path', type=str, help="Path to kea logs",
-        default='/var/log/kea-debug.log')
+    root_parser.add_argument('--kea-start', type=str,
+        help='Custom command to start kea',
+        default='/usr/sbin/kea-dhcp4 -c /kea-config.json')
     args = root_parser.parse_args()
 
-    if Path(args.log_path).is_file():
-        ips = parse_kea_log(open(args.log_path).read().encode())
-        sleep(args.time)
-        for ip in ips:
-            if is_ipmiping(ip['ip']):
-                ip['ipmi'] = True
-            else:
-                ip['ipmi'] = False
-        print(dumps(ips))
-    else:
-        print("Kea log file not found")
-        exit(1)
+    kea_log = start_kea(args.kea_start, args.time)
+    ips = parse_kea_log(open(kea_log).read().encode())
+    for ip in ips:
+        if is_ipmiping(ip['ip']):
+            ip['ipmi'] = True
+        else:
+            ip['ipmi'] = False
+
+    print(dumps(ips))
 
 
 if __name__ == '__main__':
