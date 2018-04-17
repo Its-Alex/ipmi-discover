@@ -5,7 +5,7 @@
         "rebind-timer": 2000,
         "interfaces-config": {
             "interfaces": [
-                "enp4s0f0"
+                  "*"
             ]
         },
         "subnet4": [
@@ -34,13 +34,26 @@
     "Logging": {
         "loggers": [
             {
-                "name": "kea-dhcp4",
-                "output_options": [
-                    {
-                        "output": "stdout"
-                    }
-                ],
-                "severity": "DEBUG"
+              "name": "kea-dhcp4",
+              "output_options": [
+                  {
+                      "output": "stdout"
+                  }
+              ],
+              "severity": "DEBUG"
+            },
+            {
+              "name": "kea-dhcp4",
+              "output_options": [
+                {
+                  "output": "/var/log/kea-debug.log",
+                  "maxver": 1,
+                  "maxsize": 2048000,
+                  "flush": true
+                }
+              ],
+              "severity": "DEBUG",
+              "debuglevel": 99
             }
         ]
     }

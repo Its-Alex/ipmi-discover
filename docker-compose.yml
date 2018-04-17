@@ -1,0 +1,8 @@
+version: '3'
+services:
+  kea:
+    build: .
+    restart: unless-stopped
+    command: sleep infinity
+    volumes:
+      - ./:/code/
