@@ -13,6 +13,8 @@ setuptools = "*"
 [dev-packages]
 
 pytest = "*"
+pylint = "*"
+"autopep8" = "*"
 
 
 [requires]
