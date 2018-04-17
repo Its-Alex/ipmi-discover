@@ -4,6 +4,7 @@
 # python
 __pycache__/
 .pytest_cache/
+ipmi_finder.egg-info/
 
 # trash
 *.log
