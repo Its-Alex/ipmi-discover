@@ -1,6 +1,6 @@
 version: '3'
 services:
-  kea:
+  ipmi-discover:
     build: .
     restart: unless-stopped
     command: sleep infinity
