@@ -12,26 +12,16 @@ $ pipenv install
 $ pipenv shell
 ```
 
-## Build
-
-```
-$ docker build -t <tag> .
-```
-
-## Use
-
-To use this image you need to provide a kea configuration in the container at
-`/kea-config.json`
+## How to
 
 By default this tool wait 60 seconds for kea to alloc ip then parse it's log
 
-You can change the time to wait with **-t** or **--time** option
+To use this image you must provide a kea configuration in the container at
+`/kea-config.json` and log to **stdout**
 
-You can change how to launch kea too with **--kea-start** by default it's
-
-```
-$ /usr/sbin/kea-dhcp4 -c /kea-config.json
-```
+You can change options from command:
+* **-t** or **--time** to change time to wait for kea alloc. By default `60`
+* **--kea-start** command to launch kea. By default `/usr/sbin/kea-dhcp4 -c /kea-config.json`
 
 docker-compose example:
 
@@ -47,6 +37,12 @@ services:
 ```
 
 ## Hack
+
+Build
+
+```
+$ docker build -t <tag> .
+```
 
 Launch image
 
