@@ -7,12 +7,13 @@ def parse_kea_log(output):
 
     lines = output.splitlines()
     for line in lines:
-        if line.find(b'has been allocated') != -1:
+        if line.find(b'DHCP4_LEASE_ALLOC') != -1:
+            mac = re.search(
+                r'([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})', line.decode()).group()
             result.append({
                 'ip': re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', line.decode()).group(),
                 'mac': re.search(r'([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})', line.decode()).group()
             })
-
     return result
 
 def cli():
