@@ -52,7 +52,26 @@ def is_ipmiping(ip):
         return False
 
 def cli():
-    print("ipmi-discover v0.1.0")
+    root_parser = argparse.ArgumentParser()
+    root_parser.add_argument('-t', '--time', type=int,
+        help="Time to wait for ip alloc", default=60)
+    root_parser.add_argument('--log-path', type=str, help="Path to kea logs",
+        default='/var/log/kea-debug.log')
+    args = root_parser.parse_args()
+
+    if Path(args.log_path).is_file():
+        ips = parse_kea_log(open(args.log_path).read().encode())
+        sleep(args.time)
+        for ip in ips:
+            if is_ipmiping(ip['ip']):
+                ip['ipmi'] = True
+            else:
+                ip['ipmi'] = False
+        print(dumps(ips))
+    else:
+        print("Kea log file not found")
+        exit(1)
+
 
 if __name__ == '__main__':
     cli()
