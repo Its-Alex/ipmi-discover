@@ -28,7 +28,24 @@ By default this tool wait 60 seconds for kea to alloc ip then parse it's log
 You can change the time to wait with **-t** or **--time** option
 
 You can change how to launch kea too with **--kea-start** by default it's
-`/usr/sbin/kea-dhcp4 -c /kea-config.json`
+
+```
+$ /usr/sbin/kea-dhcp4 -c /kea-config.json
+```
+
+docker-compose example:
+
+```
+version: '3'
+services:
+  ipmi-discover:
+    image: itsalex/ipmi-discover
+    restart: unless-stopped
+    command: -t 160
+    volumes:
+      - ./kea-config.json:/kea-config.json
+```
+
 ## Hack
 
 Launch image
