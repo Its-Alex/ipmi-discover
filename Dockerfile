@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS build
+FROM ubuntu:16.04 AS build
 
 ENV LANG C.UTF-8
 ENV KEA_VERSION 1.3.0
@@ -41,7 +41,7 @@ RUN apt update && apt -y --no-install-recommends --no-upgrade install \
     && make install \
 ## cleanup
     && rm -rf /usr/src \
-    && apt purge -y \
+    && apt purge -y --allow-remove-essential \
         make \
         automake \
         g++ \
@@ -54,15 +54,27 @@ RUN apt update && apt -y --no-install-recommends --no-upgrade install \
         liblog4cplus-dev \
         e2fslibs \
         postgresql-server-dev-all \
-    && apt remove --purge -y $(apt-mark showauto) \
+    && apt remove --purge -y --allow-remove-essential $(apt-mark showauto) \
     && apt autoremove -y \
-# Free IPMI
     && apt install -y --no-install-recommends --no-upgrade \
         freeipmi-tools \
         liblog4cplus-dev \
         libboost-system-dev \
         libpq-dev
+# Free IPMI
+RUN apt install -y --no-install-recommends --no-upgrade \
+        python3 \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel
+
+WORKDIR /code/
+
+COPY setup.py /code/
+COPY ipmi_finder /code/
+
+RUN pip3 install -e /code/
 
 EXPOSE 67/udp
 
-CMD ["/usr/sbin/kea-dhcp4", "--help"]
+CMD ["ipmi_finder"]

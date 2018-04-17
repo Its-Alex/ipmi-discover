@@ -1,0 +1,15 @@
+# Python
+.pytest_cache
+ipmi_diner.egg-info
+Pifile
+Pifile.lock
+
+# Git
+.gitignore
+
+# Project
+Makefile
+README.md
+example
+docker-compose.yml
+kea-config.json

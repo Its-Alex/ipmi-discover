@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="ipmi-finder",
+    name="ipmi_finder",
     version="0.1.0",
     author="Alexandre MARRE",
     author_email="me@itsalex.fr",

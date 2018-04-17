@@ -1,0 +1,8 @@
+version: '3'
+services:
+  ipmi-discover:
+    build: .
+    restart: unless-stopped
+    command: sleep infinity
+    volumes:
+      - ./:/code/

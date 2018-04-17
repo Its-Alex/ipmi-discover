@@ -6,7 +6,6 @@ This project aim to discover mac address of all IPMI asking IP address
 
 * [docker](https://www.docker.com/)
 * [pipenv](https://github.com/pypa/pipenv)
-* [direnv](https://direnv.net/)
 
 ```
 $ pipenv install
@@ -15,25 +14,33 @@ $ pipenv shell
 
 ## Build
 
-You can build docker image
-
 ```
-$ make build
+$ docker build -t <tag> .
 ```
 
 ## Use
 
-Build this image then launch it on server that receive request
+To use this image you need to provide a kea configuration in the container at
+`/kea-config.json`
 
-You can find an exemple with docker-compose [here](/docker)
+By default this tool wait 60 seconds for kea to alloc ip then parse it's log
 
+You can change the time to wait with **-t** or **--time** option
+
+You can change how to launch kea too with **--kea-start** by default it's
+`/usr/sbin/kea-dhcp4 -c /kea-config.json`
 ## Hack
 
-To enter inside image use:
+Launch image
 
 ```
-$ make run
+$ docker-compose up -d
 ```
 
+Enter inside container
+
+```
+$ docker-compose exec ipmi-discover bash
+```
 ## License
 [AGPL](https://en.wikipedia.org/wiki/Affero_General_Public_License)
