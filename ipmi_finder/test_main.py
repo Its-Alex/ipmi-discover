@@ -24,3 +24,8 @@ def test_parse_kea_log():
     assert result[2]['mac'] == 'd4:ae:52:d0:43:b5'
     assert result[2]['vendor']['name'] == 'Dell'
 
+def test_mac_lookup():
+    result = mac_lookup('d4:ae:52:d3:0f:76')
+
+    assert result['name'] == 'Dell'
+    assert result['description'] == 'Dell'
