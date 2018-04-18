@@ -56,14 +56,18 @@ def start_kea(cmd, time):
         cmd,
         shell=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
+
     )
-    out, err = p.communicate(timeout=time)
-    if p.returncode != 0:
-        print("Kea failed to start: " + err.decode('utf-8'), end='')
+    err = None
+    try:
+        _, err = p.communicate(timeout=time)
+    except subprocess.TimeoutExpired:
+        p.kill()
+    if err:
+        print("Kea failed: " + err.decode('utf-8'), end='')
         exit(1)
-    else:
-        return out
+    
 
 def cli():
     root_parser = argparse.ArgumentParser()
@@ -72,10 +76,13 @@ def cli():
     root_parser.add_argument('--kea-start', type=str,
         help='Custom command to start kea',
         default='/usr/sbin/kea-dhcp4 -c /kea-config.json')
+    root_parser.add_argument('--kea-log-path', type=str,
+        help='Custom command to start kea',
+        default='/var/log/kea-debug.log')
     args = root_parser.parse_args()
 
-    kea_log = start_kea(args.kea_start, args.time)
-    ips = parse_kea_log(open(kea_log).read().encode())
+    start_kea(args.kea_start, args.time)
+    ips = parse_kea_log(open(args.kea_log_path).read().encode())
     for ip in ips:
         if is_ipmiping(ip['ip']):
             ip['ipmi'] = True
