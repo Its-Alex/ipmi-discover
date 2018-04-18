@@ -60,9 +60,7 @@ RUN apt update && apt -y --no-install-recommends --no-upgrade install \
         freeipmi-tools \
         liblog4cplus-dev \
         libboost-system-dev \
-        libpq-dev
-# Free IPMI
-RUN apt install -y --no-install-recommends --no-upgrade \
+        libpq-dev \
         python3 \
         python3-pip \
         python3-setuptools \
@@ -72,9 +70,11 @@ WORKDIR /code/
 
 COPY setup.py /code/
 COPY ipmi_finder /code/
+COPY launch-services.sh /launch-services.sh
 
-RUN pip3 install -e /code/
+RUN pip3 install -e /code/ \
+    && chmod o+rx /launch-services.sh
 
 EXPOSE 67/udp
 
-CMD ["ipmi_finder"]
+CMD ["/launch-services.sh"]
