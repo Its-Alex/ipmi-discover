@@ -17,10 +17,11 @@ $ pipenv shell
 By default this tool wait 60 seconds for kea to alloc ip then parse it's log
 
 To use this image you must provide a kea configuration in the container at
-`/kea-config.json` and log to **stdout**
+`/kea-config.json` and log to **file**
 
 You can change options from command:
 * **-t** or **--time** to change time to wait for kea alloc. By default `60`
+* **--kea-log-output** to change where is store log
 * **--kea-start** command to launch kea. By default `/usr/sbin/kea-dhcp4 -c /kea-config.json`
 
 docker-compose example:

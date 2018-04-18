@@ -82,14 +82,18 @@ def cli():
     args = root_parser.parse_args()
 
     start_kea(args.kea_start, args.time)
-    ips = parse_kea_log(open(args.kea_log_path).read().encode())
-    for ip in ips:
-        if is_ipmiping(ip['ip']):
-            ip['ipmi'] = True
-        else:
-            ip['ipmi'] = False
+    if open(args.kea_log_path).exists():
+        ips = parse_kea_log(open(args.kea_log_path).read().encode())
+        for ip in ips:
+            if is_ipmiping(ip['ip']):
+                ip['ipmi'] = True
+            else:
+                ip['ipmi'] = False
 
-    print(dumps(ips))
+        print(dumps(ips))
+    else:
+        print("Log file not found")
+        exit(1)
 
 
 if __name__ == '__main__':
