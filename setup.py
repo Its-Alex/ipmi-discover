@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="ipmi_finder",
+    name="ipmi-finder",
     version="0.1.0",
     author="Alexandre MARRE",
     author_email="me@itsalex.fr",
@@ -11,7 +11,7 @@ setuptools.setup(
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'ipmi_finder=ipmi_finder:cli'
+            'ipmi-finder=ipmi_finder:cli'
         ]
     }
 )
