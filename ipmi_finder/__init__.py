@@ -36,7 +36,7 @@ def mac_lookup(mac):
 
 def is_ipmiping(ip):
     p = subprocess.Popen(
-        "/usr/bin/ipmiping -c 2 " + ip,
+        "ipmiping -c 2 " + ip,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
