@@ -5,12 +5,6 @@ This project aim to discover mac address of all IPMI asking IP address
 ## Requirements
 
 * [docker](https://www.docker.com/)
-* [pipenv](https://github.com/pypa/pipenv)
-
-```
-$ pipenv install
-$ pipenv shell
-```
 
 ## Development
 
@@ -25,6 +19,9 @@ Enter inside container
 ```
 $ docker-compose exec ipmi-discover bash
 ```
+
+This folder is synced with `/code/` in container so all python deps are inside
+container
 
 ## How to
 
@@ -51,6 +48,8 @@ services:
     volumes:
       - ./kea-config.json:/kea-config.json
 ```
+
+output:
 
 ```json5
 [{
