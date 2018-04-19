@@ -46,9 +46,31 @@ services:
   ipmi-discover:
     image: itsalex/ipmi-discover
     restart: unless-stopped
+    network_mode: host
     command: /launch-services.sh -t 60
     volumes:
       - ./kea-config.json:/kea-config.json
 ```
+
+```json5
+[{
+	"vendor": {
+		"description": "PcsCompu",
+		"name": "PcsCompu"
+	},
+	"ip": "192.168.0.12",
+	"mac": "08:00:27:8a:17:9b",
+	"ipmi": false
+}, {
+	"vendor": {
+		"description": "PcsCompu",
+		"name": "PcsCompu"
+	},
+	"ip": "192.168.0.12",
+	"mac": "08:00:27:8a:17:9b",
+	"ipmi": false
+}]
+```
+
 ## License
 [AGPL](https://en.wikipedia.org/wiki/Affero_General_Public_License)
