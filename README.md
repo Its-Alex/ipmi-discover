@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Its-Alex/ipmi-discover.svg?branch=master)](https://travis-ci.org/Its-Alex/ipmi-discover)
+[![Docker Automated build](https://img.shields.io/docker/automated/itsalex/ipmi-discover.svg)](https://hub.docker.com/r/itsalex/ipmi-discover/)
+[![Docker Build Status](https://img.shields.io/docker/build/itsalex/ipmi-discover.svg)](https://hub.docker.com/r/itsalex/ipmi-discover/)
+
 # IPMI-Discover
 
 This project aim to discover mac address of all IPMI asking IP address
